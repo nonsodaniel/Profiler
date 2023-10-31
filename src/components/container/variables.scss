@@ -1,0 +1,25 @@
+:root{
+    --primary-color: #7888fc;
+    --info-color: #0095ff;
+    --color-grey: #5b5b5b;
+
+    --pending-bg:rgba(241,180,76,.18);
+    --completed-bg:rgba(52,195,143,.18);
+    --cancel-bg:rgba(244, 106, 106, 0.18);
+
+    --pending-color:#f1b44c;
+    --completed-color:#34c38f;
+    --cancel-color:#f46a6a;
+
+    --mb-1:1rem;
+    --form-text: 14px;
+}
+
+
+
+@mixin spaceBetween {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  
