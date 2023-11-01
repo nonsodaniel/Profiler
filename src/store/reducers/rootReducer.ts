@@ -1,13 +1,13 @@
 import { combineReducers } from "redux";
 import userReducers from "./userReducers";
-import { APP_ACTIONS, listReducerState } from "../types";
+import { APP_ACTIONS, userReducerState } from "../types";
 
 export type AppState = {
-  lists: listReducerState;
+  users: userReducerState;
 };
 
 export type AppActionTypes = APP_ACTIONS;
 
 export const rootReducer = combineReducers({
-  lists: userReducers,
+  users: userReducers,
 });

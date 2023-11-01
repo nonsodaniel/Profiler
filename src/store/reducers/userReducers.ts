@@ -10,8 +10,9 @@ import {
   SORT_PRIORITY,
   DELETE_USER,
 } from "../actions/types";
+import { userReducerState } from "../types";
 
-const INTIAL_STATE = {
+const INTIAL_STATE: userReducerState = {
   allUsers: [],
   data: [],
   error: false,
@@ -25,6 +26,7 @@ const INTIAL_STATE = {
   pageData: [],
   currentCategory: "All",
   currentPriority: "All",
+  searchResults: [],
 };
 
 //@ts-ignore
@@ -72,11 +74,11 @@ export const reducer = (state = INTIAL_STATE, actions) => {
         searchValue === ""
           ? state.allUsers
           : state.allUsers.filter(
-              ({ title, description }) =>
+              ({ name }) =>
                 //@ts-ignore
-                title.toLowerCase().includes(searchValue.toLowerCase()) ||
+                name.first.toLowerCase().includes(searchValue.toLowerCase()) ||
                 //@ts-ignore
-                description.toLowerCase().includes(searchValue.toLowerCase())
+                name.last.toLowerCase().includes(searchValue.toLowerCase())
             );
       return {
         ...state,
@@ -92,7 +94,8 @@ export const reducer = (state = INTIAL_STATE, actions) => {
       let sortCatData =
         activeCategory === "All"
           ? state.allUsers
-          : state.allUsers.filter(({ category }) =>
+          : //@ts-ignore
+            state.allUsers.filter(({ category }) =>
               //@ts-ignore
               category.includes(activeCategory)
             );
@@ -112,7 +115,8 @@ export const reducer = (state = INTIAL_STATE, actions) => {
       let sortPrtyData =
         activePriority === "All"
           ? state.allUsers
-          : state.allUsers.filter(({ priority }) =>
+          : //@ts-ignore
+            state.allUsers.filter(({ priority }) =>
               //@ts-ignore
               priority.includes(activePriority)
             );

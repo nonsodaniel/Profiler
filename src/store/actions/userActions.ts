@@ -1,5 +1,5 @@
+import { Get } from "../../config/apiServices";
 import useFetch from "../../hooks/useFetch";
-import { saveToLocalStorage } from "../localstorage";
 import {
   START_FETCH_USER,
   SET_USER_DATA,
@@ -22,17 +22,18 @@ interface IPayload {
 export const getUsers = () => {
   return async (dispatch: Dispatch) => {
     try {
+      const url = `https://randomuser.me/api/?results=20`;
       dispatch({ type: START_FETCH_USER });
-      const localList = JSON.parse(localStorage.getItem("users")!);
       let payload: IPayload = {};
-      if (localList) {
-        payload.users = localList;
+      const response = await Get(url);
+      const { status, data } = response;
+      if (status === 200) {
+        const result = response.data.results || [];
+        payload.users = result;
         return dispatch({ type: SET_USER_DATA, payload });
       } else {
-        const url = `myUrl`;
-        const response = await useFetch(url);
-        const { data, loading, error } = response;
-        //  TODO: Handle data computation
+        payload.errorMsg = "failed to fetch data";
+        return dispatch({ type: SET_USER_DATA, payload });
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -50,7 +51,6 @@ export const handleDeleteUser = (id: any) => {
     const state = getState();
     const users = [...state.users.allUsers];
     let usersLeft = users.filter((user) => id !== user.id);
-    saveToLocalStorage("users", usersLeft);
     dispatch({
       type: SET_USER_DATA,
       payload: { users: usersLeft },

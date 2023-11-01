@@ -11,17 +11,29 @@
 body {
   font-family: Circular Std;
 }
-
 .pointer {
   cursor: pointer;
 }
-
 .form-tag,
 .form-tag:focus-visible {
   line-height: 1.5;
   border: 0.5px solid #bdbdbd;
   border-radius: 2px;
 }
+
+.font-11 {
+  font-size: 11px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 0.428rem;
+  box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
+}
+.text-center {
+  text-align: center;
+}
+
 input[type="text"] {
   /* Remove shadows on iphone input */
   -webkit-appearance: none;

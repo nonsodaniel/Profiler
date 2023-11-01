@@ -1,0 +1,131 @@
+@import "../container/variables.scss";
+@import "./dragdrop.scss";
+
+.users-wrap {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: minmax(100px, auto);
+  grid-gap: 2em;
+  justify-items: stretch;
+  align-items: stretch;
+  margin-bottom: 3rem;
+  .top-detail {
+    display: flex;
+    gap: 1rem;
+    .img-wrap {
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      .img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+  .user-header {
+    font-weight: 400;
+    color: #3f3e3e;
+    padding-bottom: 1rem;
+  }
+  .user-card {
+    .user-details {
+      padding: 1rem;
+      max-height: 16rem;
+
+      .date {
+        color: #6c757d;
+        font-weight: 500;
+      }
+    }
+
+    .priority .text {
+      font-size: 13px;
+      font-weight: 600;
+      color: #7888fc;
+    }
+    .category-status {
+      @include spaceBetween;
+      border-top: 2px solid #e7e4e4;
+      padding-top: 1rem;
+      margin-top: 0;
+      span {
+        padding: 0.3rem 0.9rem;
+        border-radius: 15px;
+      }
+      .category {
+        background-color: #efe8ff;
+        border-color: #efe8ff;
+        color: #9c6efc;
+      }
+    }
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      background: #f9f9f9;
+      padding: 0.7rem 1em;
+      font-size: 12px;
+      span {
+        font-size: 16px;
+        font-size: 16px;
+        margin-left: 13px;
+        cursor: pointer;
+      }
+      .edit {
+        color: #556ee6;
+      }
+      .delete {
+        color: #e30808;
+      }
+    }
+    h3 {
+      font-weight: 600;
+      color: #333447;
+      margin: 0.5rem 0;
+      font-size: 18px;
+    }
+    p {
+      font-weight: 400;
+      font-style: normal;
+      font-size: 14px;
+      line-height: 18px;
+      margin-bottom: 0.8rem;
+      color: #3f3e3e;
+      height: 0.8rem;
+    }
+    span {
+      font-size: 12px;
+    }
+  }
+
+  .load_icon {
+    width: 50%;
+  }
+  .no-users {
+    margin-bottom: 3rem;
+  }
+  .btn-wrap {
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: 868px) {
+    .users-wrap {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .load_icon {
+      width: 100%;
+    }
+    .edit,
+    .delete {
+      font-size: 20px;
+    }
+  }
+  @media (max-width: 560px) {
+    .users-wrap {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+  }
+}

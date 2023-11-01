@@ -5,44 +5,44 @@ export interface IUserInfo {
     first: string;
     last: string;
   };
-  //   location: {
-  //     street: {
-  //       number: number;
-  //       name: string;
-  //     };
-  //     city: string;
-  //     state: string;
-  //     country: string;
-  //     postcode: number;
-  //     coordinates: {
-  //       latitude: string;
-  //       longitude: string;
-  //     };
-  //     timezone: {
-  //       offset: string;
-  //       description: string;
-  //     };
-  //   };
-  //   email: string;
-  //   dob: {
-  //     date: string;
-  //     age: number;
-  //   };
+  location: {
+    street: {
+      number: number;
+      name: string;
+    };
+    city: string;
+    state: string;
+    country: string;
+    postcode: number;
+    coordinates: {
+      latitude: string;
+      longitude: string;
+    };
+    timezone: {
+      offset: string;
+      description: string;
+    };
+  };
+  email: string;
+  dob: {
+    date: string;
+    age: number;
+  };
   //   registered: {
   //     date: string;
   //     age: number;
   //   };
-  //   phone: string;
+  phone: string;
   //   cell: string;
-  //   id: {
-  //     name: string;
-  //     value: string;
-  //   };
-  //   picture: {
-  //     large: string;
-  //     medium: string;
-  //     thumbnail: string;
-  //   };
+  id: {
+    name: string;
+    value: string;
+  };
+  picture: {
+    large: string;
+    medium: string;
+    thumbnail: string;
+  };
   //   nat: string;
 }
 
@@ -56,15 +56,21 @@ interface RandomUserResponse {
   };
 }
 
-export interface listReducerState {
+export interface userReducerState {
+  allUsers: IUserInfo[];
   data: IUserInfo[];
   searchValue: string | undefined;
   search: boolean;
   currentCategory: string;
+  currentPriority: string;
   error: boolean;
   loading: boolean;
   errorMessage: string;
   searchResults: IUserInfo[] | null;
+  totalPages: number;
+  currentPage: number;
+  pageLength: number;
+  pageData: IUserInfo[];
 }
 
 export interface APP_ACTIONS {
