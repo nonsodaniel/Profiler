@@ -1,14 +1,16 @@
+import { AiOutlineSearch } from "react-icons/ai";
+
 interface IInputProps {
   id: string;
   className: string;
   type: string;
   placeholder: string;
-  value: string;
+  value: string | undefined;
   required: boolean;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
-  onFocus: () => void;
+  onFocus?: () => void;
   dataTestId: string;
-  inputRef: React.RefObject<HTMLInputElement>;
+  inputRef?: React.RefObject<HTMLInputElement>;
 }
 
 const Input = ({
@@ -38,7 +40,9 @@ const Input = ({
         data-testid={dataTestId}
         ref={inputRef}
       />
-      <span className="cancel-wrap pointer">X</span>
+      <span className="search-icon__wrap pointer">
+        <AiOutlineSearch />
+      </span>
     </div>
   );
 };

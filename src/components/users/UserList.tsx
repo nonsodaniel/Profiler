@@ -17,7 +17,7 @@ const UserList = ({ users }: IUserListProps) => {
             <div className="img-wrap">
               <img
                 src={picture.thumbnail}
-                alt={`${name.first}-image`}
+                alt={`${name.first}-potrait`}
                 className="img"
               />
             </div>
@@ -29,7 +29,7 @@ const UserList = ({ users }: IUserListProps) => {
           <p className="user__detail">
             <span>
               <AiOutlineMail />
-            </span>{" "}
+            </span>
             <span>{email}</span>
           </p>
           <p className="user__detail">
