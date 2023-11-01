@@ -18,6 +18,10 @@ I'm not sure if state management is required, but based off of our discusssion y
 
 Encountered some challenges with `Redux store configuration`. **Time** factor plus other personal emergency didn't give me the freedom to be fine-tune every issue to my taste.
 
+## Note
+
+Note that every user without an id will not appear in the list when performing any user action such as **sorting, searching, filtering.**
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
