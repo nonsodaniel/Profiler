@@ -1,3 +1,4 @@
+import { IUserInfo } from "../types";
 import { sortUsersByFirstName } from "../../utils/helpers";
 import {
   START_FETCH_USER,
@@ -11,6 +12,11 @@ import {
   SORT_ALPHABET,
 } from "../actions/types";
 import { userReducerState } from "../types";
+
+interface Action {
+  type: string;
+  payload: any;
+}
 
 const INTIAL_STATE: userReducerState = {
   allUsers: [],
@@ -26,29 +32,31 @@ const INTIAL_STATE: userReducerState = {
   pageLength: 6,
   pageData: [],
   searchResults: [],
+  activeOrder: "",
+  activeGender: "",
 };
 
-//@ts-ignore
-
-export const reducer = (state = INTIAL_STATE, actions) => {
+const reducer = (state = INTIAL_STATE, actions: Action): userReducerState => {
   switch (actions.type) {
     case START_FETCH_USER:
       return { ...state, loading: true };
     case SET_USER_DATA:
-      let data = actions.payload.users;
+      const userData: IUserInfo[] = actions.payload.users;
       return {
         ...state,
         error: false,
         loading: false,
         errorMessage: "",
-        allUsers: data,
-        data: data,
-        totalPages: Math.ceil(data.length / state.pageLength),
-        pageData: paginate(data, state.currentPage, state.pageLength),
+        allUsers: userData,
+        data: userData,
+        totalPages: Math.ceil(userData.length / state.pageLength),
+        pageData: paginate(userData, state.currentPage, state.pageLength),
       };
     case DELETE_USER:
       const { id } = actions.payload;
-      let newData = state.allUsers.filter((data_: any) => data_.id !== id);
+      const newData = state.allUsers.filter(
+        (data: IUserInfo) => data.id !== id
+      );
       localStorage.setItem("users", JSON.stringify(newData));
       return {
         ...state,
@@ -69,12 +77,11 @@ export const reducer = (state = INTIAL_STATE, actions) => {
       };
     case SEARCH_USER: {
       const { searchValue } = actions.payload;
-      let searchData = state.allUsers;
+      let searchData: IUserInfo[] = state.allUsers;
 
       if (searchValue !== "") {
         searchData = state.allUsers.filter((user) => {
           const name = user.name;
-          const age = user.dob;
           const location = user.location;
 
           const nameMatches =
@@ -106,7 +113,7 @@ export const reducer = (state = INTIAL_STATE, actions) => {
     }
     case SORT_ALPHABET:
       const { activeOrder } = actions.payload;
-      let sortedUsers =
+      let sortedUsers: IUserInfo[] =
         activeOrder === "Default"
           ? state.allUsers
           : sortUsersByFirstName(state.allUsers, activeOrder);
@@ -122,7 +129,7 @@ export const reducer = (state = INTIAL_STATE, actions) => {
       };
     case SORT_GENDER:
       const { activeGender } = actions.payload;
-      let sortGenderData =
+      let sortGenderData: IUserInfo[] =
         activeGender === "Default"
           ? state.allUsers
           : activeGender === "Male"
@@ -134,12 +141,12 @@ export const reducer = (state = INTIAL_STATE, actions) => {
         currentPage: 1,
         searchValue: "",
         data: sortGenderData,
-        activeOrder: activeGender,
+        activeGender,
         pageData: paginate(sortGenderData, 1, state.pageLength),
       };
 
     case PREV_PAGE:
-      let prevPage = state.currentPage - 1;
+      const prevPage = state.currentPage - 1;
       return {
         ...state,
         currentPage: prevPage,
@@ -147,7 +154,7 @@ export const reducer = (state = INTIAL_STATE, actions) => {
       };
 
     case NEXT_PAGE:
-      let nextPage = state.currentPage + 1;
+      const nextPage = state.currentPage + 1;
       return {
         ...state,
         currentPage: nextPage,
@@ -157,9 +164,13 @@ export const reducer = (state = INTIAL_STATE, actions) => {
       return { ...state };
   }
 };
-//@ts-ignore
-const paginate = (arr, currentPage, pagelength) => {
-  return arr.slice((currentPage - 1) * pagelength, pagelength * currentPage);
+
+const paginate = (
+  arr: IUserInfo[],
+  currentPage: number,
+  pageLength: number
+): IUserInfo[] => {
+  return arr.slice((currentPage - 1) * pageLength, pageLength * currentPage);
 };
 
 export default reducer;

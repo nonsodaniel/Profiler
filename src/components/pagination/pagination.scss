@@ -1,0 +1,35 @@
+@import "../container/variables.scss";
+.footer {
+  margin: 0 3rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3rem;
+  z-index: 99;
+  background: white;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.pagination-wrap {
+  @include spaceBetween;
+}
+.page-btn {
+  font-weight: 500;
+  background: white;
+  border: 1px solid #3f3f3f;
+  border-radius: 3px;
+  padding: 5px 10px;
+}
+.pagination-text {
+  font-size: 13px;
+  font-weight: 500;
+  background: white;
+  border: none;
+}
+.text-disabled {
+  color: grey;
+}

@@ -1,4 +1,5 @@
 import { Get } from "../../config/apiServices";
+import { AppState } from "../reducers/rootReducer";
 import {
   START_FETCH_USER,
   SET_USER_DATA,
@@ -16,21 +17,36 @@ interface IPayload {
   errorMsg?: string;
 }
 
-export const getUsers = () => {
-  return async (dispatch: Dispatch) => {
+// Define action types explicitly
+type UserAction =
+  | { type: typeof START_FETCH_USER }
+  | { type: typeof SET_USER_DATA; payload: IPayload }
+  | { type: typeof USER_FETCH_FAILED; payload: { errorMsg: string } }
+  | { type: typeof SEARCH_USER; payload: { searchValue: string } }
+  | { type: typeof SORT_ALPHABET; payload: { activeOrder: string } }
+  | { type: typeof SORT_GENDER; payload: { activeGender: string } }
+  | { type: typeof NEXT_PAGE }
+  | { type: typeof PREV_PAGE };
+
+type GetUsersAction = (
+  pageNumber: number
+) => (dispatch: Dispatch<UserAction>) => void;
+
+export const getUsers: GetUsersAction = (pageNumber: number) => {
+  return async (dispatch: Dispatch<UserAction>) => {
     try {
-      const url = `https://randomuser.me/api/?results=20`;
+      const url = `https://randomuser.me/api/?page=${pageNumber}&results=15&seed=abc`;
       dispatch({ type: START_FETCH_USER });
       let payload: IPayload = {};
       const response = await Get(url);
-      const { status, data } = response;
+      const { status } = response;
       if (status === 200) {
         const result = response.data.results || [];
         payload.users = result;
-        return dispatch({ type: SET_USER_DATA, payload });
+        dispatch({ type: SET_USER_DATA, payload });
       } else {
         payload.errorMsg = "failed to fetch data";
-        return dispatch({ type: SET_USER_DATA, payload });
+        dispatch({ type: SET_USER_DATA, payload });
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -43,20 +59,8 @@ export const getUsers = () => {
   };
 };
 
-export const handleDeleteUser = (id: any) => {
-  return (dispatch: Dispatch, getState: any) => {
-    const state = getState();
-    const users = [...state.users.allUsers];
-    let usersLeft = users.filter((user) => id !== user.id);
-    dispatch({
-      type: SET_USER_DATA,
-      payload: { users: usersLeft },
-    });
-  };
-};
-
 export const handleSearchUser = (searchValue: string) => {
-  return (dispatch: Dispatch) => {
+  return (dispatch: Dispatch<UserAction>) => {
     dispatch({
       type: SEARCH_USER,
       payload: { searchValue },
@@ -64,7 +68,7 @@ export const handleSearchUser = (searchValue: string) => {
   };
 };
 export const handleSortAlphabet = (activeOrder: string) => {
-  return (dispatch: Dispatch) => {
+  return (dispatch: Dispatch<UserAction>) => {
     dispatch({
       type: SORT_ALPHABET,
       payload: { activeOrder },
@@ -72,24 +76,40 @@ export const handleSortAlphabet = (activeOrder: string) => {
   };
 };
 export const handleSortGender = (activeGender: string) => {
-  return (dispatch: Dispatch) => {
+  return (dispatch: Dispatch<UserAction>) => {
     dispatch({
       type: SORT_GENDER,
       payload: { activeGender },
     });
   };
 };
+
 export const handlePrevBtn = () => {
-  return (dispatch: Dispatch) => {
-    dispatch({
-      type: PREV_PAGE,
-    });
+  return (dispatch: Dispatch<UserAction>, getState: () => AppState) => {
+    const state = getState();
+    const currentPage = state.users.currentPage;
+    if (currentPage > 1) {
+      dispatch({
+        type: PREV_PAGE,
+      });
+      //@ts-ignore
+      dispatch(getUsers(currentPage - 1)); // Dispatch the getUsers action with the updated page number
+    }
   };
 };
+
+// Action to go to the next page
 export const handleNextBtn = () => {
-  return (dispatch: Dispatch) => {
-    dispatch({
-      type: NEXT_PAGE,
-    });
+  return (dispatch: Dispatch<UserAction>, getState: () => AppState) => {
+    const state = getState();
+    const currentPage = state.users.currentPage;
+    const totalPages = state.users.totalPages;
+    if (currentPage < totalPages) {
+      dispatch({
+        type: NEXT_PAGE,
+      });
+      //@ts-ignore
+      dispatch(getUsers(currentPage + 1)); // Dispatch the getUsers action with the updated page number
+    }
   };
 };

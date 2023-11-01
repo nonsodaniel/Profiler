@@ -28,12 +28,7 @@ export interface IUserInfo {
     date: string;
     age: number;
   };
-  //   registered: {
-  //     date: string;
-  //     age: number;
-  //   };
   phone: string;
-  //   cell: string;
   id: {
     name: string;
     value: string;
@@ -70,6 +65,8 @@ export interface userReducerState {
   currentPage: number;
   pageLength: number;
   pageData: IUserInfo[];
+  activeOrder: string;
+  activeGender: string;
 }
 
 export interface APP_ACTIONS {
