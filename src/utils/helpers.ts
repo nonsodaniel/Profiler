@@ -5,3 +5,18 @@ export const uuid = () => {
     return v.toString(16);
   });
 };
+
+export function sortUsersByFirstName(users: any[], activeOrder: string) {
+  return [...users].sort((a, b) => {
+    const firstNameA = a.name.first;
+    const firstNameB = b.name.first;
+
+    if (activeOrder === "Asc") {
+      return firstNameA.localeCompare(firstNameB);
+    } else if (activeOrder === "Desc") {
+      return firstNameB.localeCompare(firstNameA);
+    } else {
+      return 0;
+    }
+  });
+}

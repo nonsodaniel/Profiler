@@ -1,14 +1,14 @@
+import { sortUsersByFirstName } from "../../utils/helpers";
 import {
   START_FETCH_USER,
   SET_USER_DATA,
   USER_FETCH_FAILED,
   SEARCH_USER,
-  SORT_CATEGORY,
   SORT_DATE,
   PREV_PAGE,
   NEXT_PAGE,
-  SORT_PRIORITY,
   DELETE_USER,
+  SORT_ALPHABET,
 } from "../actions/types";
 import { userReducerState } from "../types";
 
@@ -19,13 +19,12 @@ const INTIAL_STATE: userReducerState = {
   loading: false,
   errorMessage: "",
   searchValue: "",
+  ageValue: 0,
   search: true,
   totalPages: 1,
   currentPage: 1,
   pageLength: 6,
   pageData: [],
-  currentCategory: "All",
-  currentPriority: "All",
   searchResults: [],
 };
 
@@ -68,80 +67,70 @@ export const reducer = (state = INTIAL_STATE, actions) => {
         errorMessage: actions.payload.errorMsg,
         loading: false,
       };
-    case SEARCH_USER:
+    case SEARCH_USER: {
       const { searchValue } = actions.payload;
-      let searchData =
-        searchValue === ""
-          ? state.allUsers
-          : state.allUsers.filter(
-              ({ name }) =>
-                //@ts-ignore
-                name.first.toLowerCase().includes(searchValue.toLowerCase()) ||
-                //@ts-ignore
-                name.last.toLowerCase().includes(searchValue.toLowerCase())
-            );
+      let searchData = state.allUsers;
+
+      if (searchValue !== "") {
+        searchData = state.allUsers.filter((user) => {
+          const name = user.name;
+          const age = user.dob;
+          const location = user.location;
+
+          const nameMatches =
+            name.first.toLowerCase().includes(searchValue.toLowerCase()) ||
+            name.last.toLowerCase().includes(searchValue.toLowerCase());
+
+          const locationMatches =
+            location.city.toLowerCase().includes(searchValue.toLowerCase()) ||
+            location.country.toLowerCase().includes(searchValue.toLowerCase());
+
+          const ageMatches = user.dob.age.toString() === searchValue;
+
+          return nameMatches || locationMatches || ageMatches;
+        });
+      }
+
+      const totalPages = Math.ceil(searchData.length / state.pageLength);
+      const pageData = paginate(searchData, 1, state.pageLength);
+
       return {
         ...state,
         search: true,
         currentPage: 1,
-        searchValue: searchValue,
-        totalPages: Math.ceil(searchData.length / state.pageLength),
+        searchValue,
+        totalPages,
         data: searchData,
-        pageData: paginate(searchData, 1, state.pageLength),
+        pageData,
       };
-    case SORT_CATEGORY:
-      const { activeCategory } = actions.payload;
-      let sortCatData =
-        activeCategory === "All"
+    }
+    case SORT_ALPHABET:
+      const { activeOrder } = actions.payload;
+      let sortedUsers =
+        activeOrder === "Default"
           ? state.allUsers
-          : //@ts-ignore
-            state.allUsers.filter(({ category }) =>
-              //@ts-ignore
-              category.includes(activeCategory)
-            );
+          : sortUsersByFirstName(state.allUsers, activeOrder);
       return {
         ...state,
         search: false,
         currentPage: 1,
         searchValue: "",
-        data: sortCatData,
-        totalPages: Math.ceil(sortCatData.length / state.pageLength),
-        activeCategory: activeCategory,
-        currentCategory: activeCategory,
-        pageData: paginate(sortCatData, 1, state.pageLength),
-      };
-    case SORT_PRIORITY:
-      const { activePriority } = actions.payload;
-      let sortPrtyData =
-        activePriority === "All"
-          ? state.allUsers
-          : //@ts-ignore
-            state.allUsers.filter(({ priority }) =>
-              //@ts-ignore
-              priority.includes(activePriority)
-            );
-      return {
-        ...state,
-        search: false,
-        currentPage: 1,
-        searchValue: "",
-        data: sortPrtyData,
-        totalPages: Math.ceil(sortPrtyData.length / state.pageLength),
-        activePriority: activePriority,
-        currentPriority: activePriority,
-        pageData: paginate(sortPrtyData, 1, state.pageLength),
+        data: sortedUsers,
+        totalPages: Math.ceil(sortedUsers.length / state.pageLength),
+        activeOrder,
+        pageData: paginate(sortedUsers, 1, state.pageLength),
       };
     case SORT_DATE:
       const { activeDate } = actions.payload;
       let sortDateData =
-        activeDate === "default"
+        activeDate === "Default"
           ? state.allUsers
-          : activeDate === "asc"
+          : activeDate === "Asc"
           ? [...state.allUsers].sort((a, b) =>
               //@ts-ignore
               a.created.localeCompare(b.created)
             )
-          : activeDate === "desc"
+          : activeDate === "Desc"
           ? [...state.allUsers].sort((a, b) =>
               //@ts-ignore
               b.created.localeCompare(a.created)

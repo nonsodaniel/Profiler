@@ -60,9 +60,8 @@ export interface userReducerState {
   allUsers: IUserInfo[];
   data: IUserInfo[];
   searchValue: string | undefined;
+  ageValue: number | 0;
   search: boolean;
-  currentCategory: string;
-  currentPriority: string;
   error: boolean;
   loading: boolean;
   errorMessage: string;

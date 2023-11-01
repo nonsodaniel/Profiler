@@ -1,16 +1,13 @@
 import { Get } from "../../config/apiServices";
-import useFetch from "../../hooks/useFetch";
 import {
   START_FETCH_USER,
   SET_USER_DATA,
   USER_FETCH_FAILED,
   SEARCH_USER,
-  SORT_CATEGORY,
   SORT_DATE,
   SORT_ALPHABET,
   NEXT_PAGE,
   PREV_PAGE,
-  SORT_PRIORITY,
 } from "./types";
 import { Dispatch } from "redux";
 
@@ -66,16 +63,7 @@ export const handleSearchUser = (searchValue: string) => {
     });
   };
 };
-export const handleSortCategory = (activeCategory: any) => {
-  return (dispatch: Dispatch) => {
-    dispatch({
-      type: SORT_CATEGORY,
-      payload: { activeCategory },
-    });
-  };
-};
-
-export const handleSortAlphabet = (activeOrder: any) => {
+export const handleSortAlphabet = (activeOrder: string) => {
   return (dispatch: Dispatch) => {
     dispatch({
       type: SORT_ALPHABET,
@@ -83,7 +71,7 @@ export const handleSortAlphabet = (activeOrder: any) => {
     });
   };
 };
-export const handleSortDate = (activeDate: any) => {
+export const handleSortDate = (activeDate: string) => {
   return (dispatch: Dispatch) => {
     dispatch({
       type: SORT_DATE,

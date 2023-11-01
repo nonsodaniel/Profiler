@@ -2,7 +2,7 @@ import * as actions from "../../store/actions/userActions";
 import { useDispatch } from "react-redux";
 
 import "./header.scss";
-import { categorList } from "../../utils/db";
+import { sortAlphabetList } from "../../utils/db";
 
 const Header = (props: any) => {
   const dispatch = useDispatch();
@@ -12,17 +12,16 @@ const Header = (props: any) => {
   }) => {
     dispatch(actions.handleSearchUser(target.value));
   };
-  const sortCategory: React.ChangeEventHandler<HTMLSelectElement> = ({
+  const sortAlphabet: React.ChangeEventHandler<HTMLSelectElement> = ({
     target,
   }) => {
-    dispatch(actions.handleSortCategory(target.value));
+    dispatch(actions.handleSortAlphabet(target.value));
   };
   const sortDate: React.ChangeEventHandler<HTMLSelectElement> = ({
     target,
   }) => {
     dispatch(actions.handleSortDate(target.value));
   };
-
   return (
     <header className="header" data-testid="header">
       <form action="">
@@ -44,18 +43,18 @@ const Header = (props: any) => {
           </div>
           <div className="sort-row">
             <span className="sort-items sort-title">Sort By: </span>
+
             <div className="select-wrap sort-items">
               <label htmlFor="sortCategory" className="sort-label">
-                Category
+                Order By
               </label>
               <select
                 className="select-item"
                 aria-label="select"
-                onChange={sortCategory}
-                data-testid="sort-category"
+                onChange={sortAlphabet}
+                data-testid="sort-alphabet"
               >
-                <option value="All"> Select Category</option>
-                {categorList.map((catgry: any) => {
+                {sortAlphabetList.map((catgry: any) => {
                   let { id, value } = catgry;
                   return (
                     <option key={id} value={value}>
