@@ -1,10 +1,14 @@
 import { IUserInfo } from "../../store/types";
+import { AiOutlineMail, AiOutlinePhone } from "react-icons/ai";
+import { IoPersonOutline } from "react-icons/io5";
+import { FiMapPin } from "react-icons/fi";
+
 interface IUserListProps {
   users: IUserInfo;
 }
 
 const UserList = ({ users }: IUserListProps) => {
-  const { id, name, phone, picture, dob, email, location, gender } = users;
+  const { name, phone, picture, dob, email, location, gender } = users;
   return (
     <>
       <div className="card user-card">
@@ -22,14 +26,34 @@ const UserList = ({ users }: IUserListProps) => {
             </h3>
           </div>
 
-          <p>{email}</p>
-          <p className="">
-            <i className="far fa-clock"> </i>
-            {phone}
+          <p className="user__detail">
+            <span>
+              <AiOutlineMail />
+            </span>{" "}
+            <span>{email}</span>
           </p>
-          <p className="capitalize">{gender}</p>
-          <p className="">
-            {location.city}, {location.country}
+          <p className="user__detail">
+            <span>
+              {" "}
+              <AiOutlinePhone />
+            </span>
+            <span>{phone}</span>
+          </p>
+          <p className="capitalize user__detail">
+            <span>
+              <IoPersonOutline />
+            </span>
+            <span>{gender}</span>
+          </p>
+          <p className="user__detail">
+            <span>
+              {" "}
+              <FiMapPin />
+            </span>
+
+            <span>
+              {location.city}, {location.country}
+            </span>
           </p>
           <br />
           <div className="category-status">

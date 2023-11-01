@@ -6,4 +6,3 @@ export const SORT_ALPHABET = "SORT_ALPHABET";
 export const SORT_GENDER = "SORT_GENDER";
 export const PREV_PAGE = "PREV_PAGE";
 export const NEXT_PAGE = "NEXT_PAGE";
-export const DELETE_USER = "DELETE_USER";

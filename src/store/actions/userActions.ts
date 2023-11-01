@@ -1,5 +1,6 @@
 import { Get } from "../../config/apiServices";
 import { AppState } from "../reducers/rootReducer";
+import { IUserInfo } from "../types";
 import {
   START_FETCH_USER,
   SET_USER_DATA,
@@ -13,7 +14,7 @@ import {
 import { Dispatch } from "redux";
 
 interface IPayload {
-  users?: any;
+  users?: IUserInfo;
   errorMsg?: string;
 }
 
@@ -35,7 +36,7 @@ type GetUsersAction = (
 export const getUsers: GetUsersAction = (pageNumber: number) => {
   return async (dispatch: Dispatch<UserAction>) => {
     try {
-      const url = `https://randomuser.me/api/?page=${pageNumber}&results=15&seed=abc`;
+      const url = `https://randomuser.me/api/?page=${pageNumber}&results=15`;
       dispatch({ type: START_FETCH_USER });
       let payload: IPayload = {};
       const response = await Get(url);

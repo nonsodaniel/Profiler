@@ -3,8 +3,13 @@ import { useDispatch } from "react-redux";
 
 import "./header.scss";
 import { genderList, sortAlphabetList } from "../../utils/db";
+import { IDropDownList } from "../../store/types";
 
-const Header = (props: any) => {
+interface HeaderProps {
+  searchValue?: string;
+}
+
+const Header = (props: HeaderProps) => {
   const dispatch = useDispatch();
 
   const handleSearch: React.ChangeEventHandler<HTMLInputElement> = ({
@@ -32,7 +37,7 @@ const Header = (props: any) => {
               className="form-tag search-textbox"
               data-testid="search-textfield"
               aria-label="search-textfield"
-              placeholder="Search User"
+              placeholder="Search User name, age, nationality..."
               value={props.searchValue}
               onChange={handleSearch}
             />
@@ -74,8 +79,8 @@ const Header = (props: any) => {
                 onChange={sortGender}
                 data-testid="sort-date"
               >
-                {genderList.map((catgry: any) => {
-                  let { id, value } = catgry;
+                {genderList.map((item: IDropDownList) => {
+                  let { id, value } = item;
                   return (
                     <option key={id} value={value}>
                       {value}

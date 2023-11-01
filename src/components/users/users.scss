@@ -1,5 +1,4 @@
 @import "../container/variables.scss";
-@import "./dragdrop.scss";
 
 .users-wrap {
   display: grid;
@@ -12,6 +11,7 @@
   .top-detail {
     display: flex;
     gap: 1rem;
+    margin-bottom: 0.8rem;
     .img-wrap {
       height: 40px;
       width: 40px;
@@ -32,17 +32,15 @@
     .user-details {
       padding: 1rem;
       max-height: 16rem;
-
+      .user__detail {
+        display: flex;
+        gap: 0.5rem;
+        font-size: 15px;
+      }
       .date {
         color: #6c757d;
         font-weight: 500;
       }
-    }
-
-    .priority .text {
-      font-size: 13px;
-      font-weight: 600;
-      color: #7888fc;
     }
     .category-status {
       @include spaceBetween;
@@ -59,25 +57,7 @@
         color: #9c6efc;
       }
     }
-    .actions {
-      display: flex;
-      justify-content: flex-end;
-      background: #f9f9f9;
-      padding: 0.7rem 1em;
-      font-size: 12px;
-      span {
-        font-size: 16px;
-        font-size: 16px;
-        margin-left: 13px;
-        cursor: pointer;
-      }
-      .edit {
-        color: #556ee6;
-      }
-      .delete {
-        color: #e30808;
-      }
-    }
+
     h3 {
       font-weight: 600;
       color: #333447;
@@ -94,7 +74,7 @@
       height: 0.8rem;
     }
     span {
-      font-size: 12px;
+      font-size: 13px;
     }
   }
 
@@ -116,9 +96,6 @@
 
     .load_icon {
       width: 100%;
-    }
-    .delete {
-      font-size: 20px;
     }
   }
   @media (max-width: 560px) {

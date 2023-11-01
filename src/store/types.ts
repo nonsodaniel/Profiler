@@ -80,3 +80,9 @@ export interface APP_ACTIONS {
     activeDate: string;
   };
 }
+
+export interface IDropDownList {
+  id: number;
+  value: string;
+}
+[];

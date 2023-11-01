@@ -8,7 +8,6 @@ import {
   SORT_GENDER,
   PREV_PAGE,
   NEXT_PAGE,
-  DELETE_USER,
   SORT_ALPHABET,
 } from "../actions/types";
 import { userReducerState } from "../types";
@@ -52,21 +51,6 @@ const reducer = (state = INTIAL_STATE, actions: Action): userReducerState => {
         totalPages: Math.ceil(userData.length / state.pageLength),
         pageData: paginate(userData, state.currentPage, state.pageLength),
       };
-    case DELETE_USER:
-      const { id } = actions.payload;
-      const newData = state.allUsers.filter(
-        (data: IUserInfo) => data.id !== id
-      );
-      localStorage.setItem("users", JSON.stringify(newData));
-      return {
-        ...state,
-        search: false,
-        currentPage: 1,
-        searchValue: "",
-        totalPages: Math.ceil(newData.length / state.pageLength),
-        data: newData,
-        pageData: paginate(newData, 1, state.pageLength),
-      };
 
     case USER_FETCH_FAILED:
       return {
@@ -92,8 +76,7 @@ const reducer = (state = INTIAL_STATE, actions: Action): userReducerState => {
             location.city.toLowerCase().includes(searchValue.toLowerCase()) ||
             location.country.toLowerCase().includes(searchValue.toLowerCase());
 
-          const ageMatches = user.dob.age.toString() === searchValue;
-
+          const ageMatches = user.dob.age === parseInt(searchValue);
           return nameMatches || locationMatches || ageMatches;
         });
       }
