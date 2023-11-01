@@ -4,7 +4,7 @@ import {
   SET_USER_DATA,
   USER_FETCH_FAILED,
   SEARCH_USER,
-  SORT_DATE,
+  SORT_GENDER,
   SORT_ALPHABET,
   NEXT_PAGE,
   PREV_PAGE,
@@ -71,11 +71,11 @@ export const handleSortAlphabet = (activeOrder: string) => {
     });
   };
 };
-export const handleSortDate = (activeDate: string) => {
+export const handleSortGender = (activeGender: string) => {
   return (dispatch: Dispatch) => {
     dispatch({
-      type: SORT_DATE,
-      payload: { activeDate },
+      type: SORT_GENDER,
+      payload: { activeGender },
     });
   };
 };

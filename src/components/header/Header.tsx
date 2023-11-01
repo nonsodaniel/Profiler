@@ -2,7 +2,7 @@ import * as actions from "../../store/actions/userActions";
 import { useDispatch } from "react-redux";
 
 import "./header.scss";
-import { sortAlphabetList } from "../../utils/db";
+import { genderList, sortAlphabetList } from "../../utils/db";
 
 const Header = (props: any) => {
   const dispatch = useDispatch();
@@ -17,10 +17,10 @@ const Header = (props: any) => {
   }) => {
     dispatch(actions.handleSortAlphabet(target.value));
   };
-  const sortDate: React.ChangeEventHandler<HTMLSelectElement> = ({
+  const sortGender: React.ChangeEventHandler<HTMLSelectElement> = ({
     target,
   }) => {
-    dispatch(actions.handleSortDate(target.value));
+    dispatch(actions.handleSortGender(target.value));
   };
   return (
     <header className="header" data-testid="header">
@@ -65,18 +65,23 @@ const Header = (props: any) => {
               </select>
             </div>
             <div className="select-wrap sort-items">
-              <label htmlFor="sortDate" className="sort-label">
-                Date
+              <label htmlFor="sortGender" className="sort-label">
+                Gender
               </label>
               <select
                 className="select-item"
                 aria-label="select"
-                onChange={sortDate}
+                onChange={sortGender}
                 data-testid="sort-date"
               >
-                <option value="default">Select Date order</option>
-                <option value="asc">Ascending</option>
-                <option value="desc">Descending</option>
+                {genderList.map((catgry: any) => {
+                  let { id, value } = catgry;
+                  return (
+                    <option key={id} value={value}>
+                      {value}
+                    </option>
+                  );
+                })}
               </select>
             </div>
           </div>

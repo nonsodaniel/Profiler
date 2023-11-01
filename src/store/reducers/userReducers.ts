@@ -4,7 +4,7 @@ import {
   SET_USER_DATA,
   USER_FETCH_FAILED,
   SEARCH_USER,
-  SORT_DATE,
+  SORT_GENDER,
   PREV_PAGE,
   NEXT_PAGE,
   DELETE_USER,
@@ -120,30 +120,22 @@ export const reducer = (state = INTIAL_STATE, actions) => {
         activeOrder,
         pageData: paginate(sortedUsers, 1, state.pageLength),
       };
-    case SORT_DATE:
-      const { activeDate } = actions.payload;
-      let sortDateData =
-        activeDate === "Default"
+    case SORT_GENDER:
+      const { activeGender } = actions.payload;
+      let sortGenderData =
+        activeGender === "Default"
           ? state.allUsers
-          : activeDate === "Asc"
-          ? [...state.allUsers].sort((a, b) =>
-              //@ts-ignore
-              a.created.localeCompare(b.created)
-            )
-          : activeDate === "Desc"
-          ? [...state.allUsers].sort((a, b) =>
-              //@ts-ignore
-              b.created.localeCompare(a.created)
-            )
-          : null;
+          : activeGender === "Male"
+          ? state.allUsers.filter((user) => user.gender === "male")
+          : state.allUsers.filter((user) => user.gender === "female");
       return {
         ...state,
         search: false,
         currentPage: 1,
         searchValue: "",
-        data: sortDateData,
-        activeOrder: activeDate,
-        pageData: paginate(sortDateData, 1, state.pageLength),
+        data: sortGenderData,
+        activeOrder: activeGender,
+        pageData: paginate(sortGenderData, 1, state.pageLength),
       };
 
     case PREV_PAGE:

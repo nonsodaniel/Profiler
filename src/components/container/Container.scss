@@ -1,21 +1,21 @@
-@media (min-width: 1200px){
-    .container {
-        max-width: 1250px;
-    }    
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1250px;
+    position: relative;
+  }
 }
 
 .container {
-    width: 100%;
-    padding-right: 6rem;
-    padding-left: 6rem;
-    margin-right: auto;
-    margin-left: auto;
+  width: 100%;
+  padding-right: 6rem;
+  padding-left: 6rem;
+  margin-right: auto;
+  margin-left: auto;
 }
 
-@media (max-width: 768px){
-    .container{
-        padding-right: 1rem;
-        padding-left: 1rem;
-    }
-  
+@media (max-width: 768px) {
+  .container {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
 }

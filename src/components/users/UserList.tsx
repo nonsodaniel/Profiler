@@ -32,7 +32,8 @@ const UserList = ({ users }: IUserListProps) => {
               />
             </div>
             <h3>
-              {name.first} {name.last}
+              {name.first} {name.last}{" "}
+              <span className={"category"}>{dob.age} years</span>
             </h3>
           </div>
 
@@ -41,7 +42,7 @@ const UserList = ({ users }: IUserListProps) => {
             <i className="far fa-clock"> </i>
             {phone}
           </p>
-          <p className="">{gender}</p>
+          <p className="capitalize">{gender}</p>
           <p className="">
             {location.city}, {location.country}
           </p>

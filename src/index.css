@@ -58,3 +58,6 @@ input[type="text"] {
 .form-group {
   margin-bottom: 1rem;
 }
+.capitalize {
+  text-transform: capitalize;
+}
