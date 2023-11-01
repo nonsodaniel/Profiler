@@ -8,6 +8,7 @@
   justify-items: stretch;
   align-items: stretch;
   margin-bottom: 7rem;
+  overflow-y: scroll;
   .top-detail {
     display: flex;
     gap: 1rem;
@@ -87,21 +88,22 @@
   .btn-wrap {
     margin-bottom: 2rem;
   }
+}
 
-  @media (max-width: 868px) {
-    .users-wrap {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    .load_icon {
-      width: 100%;
-    }
+@media (max-width: 868px) {
+  .users-wrap {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    overflow-y: scroll;
   }
-  @media (max-width: 560px) {
-    .users-wrap {
-      display: grid;
-      grid-template-columns: 1fr;
-    }
+
+  .load_icon {
+    width: 100%;
+  }
+}
+@media (max-width: 560px) {
+  .users-wrap {
+    display: grid;
+    grid-template-columns: 1fr;
   }
 }
